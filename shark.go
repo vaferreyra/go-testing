@@ -8,6 +8,7 @@ var (
 	ErrTiredShark     = errors.New("cannot hunt, i am really tired")
 	ErrSharkNotHungry = errors.New("cannot hunt, i am not hungry")
 	ErrCantCatch      = errors.New("could not catch it")
+	ErrPreyNotExists  = errors.New("prey doesn't exists")
 )
 
 type Shark struct {
@@ -21,7 +22,10 @@ type Prey struct {
 	speed int
 }
 
-func (s *Shark) Hunt(p *Prey) error {
+func (s *Shark) Hunt(p *Prey) (err error) {
+	if p == nil {
+		return ErrPreyNotExists
+	}
 	if s.tired {
 		return ErrTiredShark
 	}
@@ -35,5 +39,5 @@ func (s *Shark) Hunt(p *Prey) error {
 
 	s.hungry = false
 	s.tired = true
-	return nil
+	return
 }
