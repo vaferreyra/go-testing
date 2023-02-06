@@ -1,7 +1,7 @@
 package prey
 
 import (
-	"testdoubles/prey/mocks"
+	mocks "testdoubles/prey/prey_mock"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -1,4 +1,4 @@
-package mocks
+package prey_mock
 
 type preyDummy struct {
 	maxSpeed float64

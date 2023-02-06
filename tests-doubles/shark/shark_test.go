@@ -3,6 +3,7 @@ package shark
 import (
 	"errors"
 	"testdoubles/prey"
+	"testdoubles/prey/prey_mock"
 	"testdoubles/simulator/mocks"
 	"testing"
 
@@ -47,4 +48,40 @@ func TestHunt(t *testing.T) {
 		assert.True(t, simulatorMock.Spy["GetLinearDistance"])
 	})
 
+	t.Run("Hunt prey being fastly and short distance", func(t *testing.T) {
+		// Arrange.
+		simulatorMock := mocks.NewSimulatorMock()
+		simulatorMock.Reset()
+		simulatorMock.Can_Catch = true
+		simulatorMock.LinearDistance = 10
+
+		whiteShark := CreateWhiteShark(simulatorMock)
+		prey := prey_mock.NewPreyStub()
+
+		// Act.
+		err := whiteShark.Hunt(prey)
+
+		// Assert.
+		assert.NoError(t, err)
+		assert.True(t, simulatorMock.Spy["GetLinearDistance"])
+	})
+
+	t.Run("Shark cannot hunt prey for being slowlier", func(t *testing.T) {
+		simulatorMock := mocks.NewSimulatorMock()
+		simulatorMock.Reset()
+		simulatorMock.LinearDistance = 10
+
+		whiteShark := CreateWhiteShark(simulatorMock)
+		prey := prey_mock.NewPreyStub()
+
+		prey.NewSpeed(300)
+
+		// Act.
+		err := whiteShark.Hunt(prey)
+
+		// Assert.
+		assert.Error(t, err)
+		assert.True(t, errors.Is(err, ErrCantHuntThePrey))
+		assert.True(t, simulatorMock.Spy["GetLinearDistance"])
+	})
 }
