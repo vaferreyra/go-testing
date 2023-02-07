@@ -3,26 +3,26 @@ package simulator
 import "math/big"
 
 type mockCatchSimulator struct {
-	maxTimeToCatch float64
-	spy            map[string]bool
+	MaxTimeToCatch float64
+	Spy            map[string]bool
 }
 
 func NewMockCatchSimulator(maxTimeToCatch float64) *mockCatchSimulator {
 	return &mockCatchSimulator{
-		maxTimeToCatch: maxTimeToCatch,
-		spy:            make(map[string]bool),
+		MaxTimeToCatch: maxTimeToCatch,
+		Spy:            make(map[string]bool),
 	}
 }
 
 func (ms *mockCatchSimulator) CanCatch(distance float64, speed float64, catchSpeed float64) bool {
-	ms.spy["CanCatch"] = true
+	ms.Spy["CanCatch"] = true
 
 	timeToCatch := distance / (speed - catchSpeed)
-	return timeToCatch > 0 && timeToCatch <= ms.maxTimeToCatch
+	return timeToCatch > 0 && timeToCatch <= ms.MaxTimeToCatch
 }
 
 func (ms *mockCatchSimulator) GetLinearDistance(position [2]float64) float64 {
-	ms.spy["GetLinearDistance"] = true
+	ms.Spy["GetLinearDistance"] = true
 
 	x := big.NewFloat(position[0])
 	y := big.NewFloat(position[1])

@@ -1,12 +1,17 @@
 package shark
 
 import (
+	"errors"
 	"fmt"
 	"integrationtests/pkg/storage"
 	"integrationtests/prey"
 	"integrationtests/simulator"
 	"math/rand"
 	"time"
+)
+
+var (
+	ErrCantCatch = errors.New("could not hunt the prey")
 )
 
 func init() {
@@ -27,7 +32,7 @@ func (w *whiteShark) Hunt(prey prey.Prey) error {
 		fmt.Println("ñam ñam")
 		return nil
 	}
-	return fmt.Errorf("could not hunt the prey")
+	return ErrCantCatch
 }
 
 func CreateWhiteShark(simulator simulator.CatchSimulator, storage storage.Storage) Shark {
