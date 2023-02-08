@@ -38,7 +38,7 @@ func TestHunt(t *testing.T) {
 		whiteShark := CreateWhiteShark(simulatorMock)
 		prey := prey.CreateTuna()
 
-		// Act.
+		// Act
 		err := whiteShark.Hunt(prey)
 
 		// Assert
